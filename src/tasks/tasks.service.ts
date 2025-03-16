@@ -47,28 +47,12 @@ export class TasksService {
     return result;
   }
 
-  // updateStatusById(
-  //   id: string,
-  //   updateStatusDto: UpdateStatusDto,
-  // ): Task | undefined {
-  //   const { status } = updateStatusDto;
-  //   // Find the index of the task with the given ID
-  //   const index = this.tasks.findIndex((task) => task.id === id);
-  //   if (index !== -1) {
-  //     // Update the task at the found index
-  //     this.tasks[index] = { ...this.tasks[index], status };
-  //     // Return the updated task
-  //     return this.tasks[index];
-  //   } else {
-  //     console.warn(`Task with ID ${id} not found.`);
-  //     return undefined;
-  //   }
-  // }
-  // updateTaskStatus(id: string, status: TaskStatus) {
-  //   const task = this.getTaskById(id);
-  //   task.status = status;
-  //   return task;
-  // }
+  async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
+    const task = await this.getTaskById(id);
+    task.status = status;
+    await this.tasksRepository.save(task);
+    return task;
+  }
 
   createTask(createTaskDto: CreateTaskDto): Promise<Task> {
     return this.tasksRepository.createTask(createTaskDto);
