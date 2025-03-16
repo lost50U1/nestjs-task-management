@@ -14,7 +14,7 @@ import { TaskStatus } from './task-status.enum';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
 import { Task } from './task.entity';
-
+import { DeleteResult } from 'typeorm';
 @Controller('tasks')
 export class TasksController {
   constructor(private tasksService: TasksService) {}
@@ -38,11 +38,10 @@ export class TasksController {
     return this.tasksService.getTaskById(id);
   }
 
-
-  // @Delete('/:id')
-  // deleteTaskById(@Param('id') id: string): void {
-  //   return this.tasksService.deleteTaskById(id);
-  // }
+  @Delete('/:id')
+  deleteTaskById(@Param('id') id: string): Promise<DeleteResult> {
+    return this.tasksService.deleteTaskById(id);
+  }
 
   // @Patch('/:id')
   // updateStatusById(

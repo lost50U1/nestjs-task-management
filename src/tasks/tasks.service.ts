@@ -5,7 +5,7 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { TasksRepository } from './task.repository';
 import { Task } from './task.entity';
-
+import { DeleteResult } from 'typeorm';
 @Injectable()
 export class TasksService {
   constructor(private tasksRepository: TasksRepository) {}
@@ -37,9 +37,16 @@ export class TasksService {
     return found;
   }
 
-  // deleteTaskById(id: string): void {
-  //   this.tasks = this.tasks.filter((task) => task.id !== id);
-  // }
+  async deleteTaskById(id: string): Promise<DeleteResult> {
+    const result = await this.tasksRepository.delete(id);
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`Task with ID "${id}" not found`);
+    }
+
+    return result;
+  }
+
   // updateStatusById(
   //   id: string,
   //   updateStatusDto: UpdateStatusDto,
