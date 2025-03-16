@@ -9,10 +9,11 @@ import { DeleteResult } from 'typeorm';
 @Injectable()
 export class TasksService {
   constructor(private tasksRepository: TasksRepository) {}
-  // private tasks: Task[] = [];
-  // getAllTasks(): Task[] {
-  //   return this.tasks;
-  // }
+
+  async getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
+    return this.tasksRepository.getTasks(filterDto);
+  }
+
   // getTasksWithFilters(filterDto: GetTasksFilterDto) {
   //   const { status, search } = filterDto;
   //   let tasks = this.getAllTasks();

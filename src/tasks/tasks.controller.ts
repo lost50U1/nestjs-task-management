@@ -19,19 +19,10 @@ import { DeleteResult } from 'typeorm';
 export class TasksController {
   constructor(private tasksService: TasksService) {}
 
-  // @Get()
-  // getAllTasks() {
-  //   return this.tasksService.getAllTasks();
-  // }
-
-  // @Get()
-  // getTasks(@Query() filterDto: GetTasksFilterDto) {
-  //   if (Object.keys(filterDto).length) {
-  //     return this.tasksService.getTasksWithFilters(filterDto);
-  //   } else {
-  //     return this.tasksService.getAllTasks();
-  //   }
-  // }
+  @Get()
+  getTasks(@Query() filterDto: GetTasksFilterDto): Promise<Task[]> {
+    return this.tasksService.getTasks(filterDto);
+  }
 
   @Get('/:id')
   getTaskById(@Param('id') id: string): Promise<Task> {
